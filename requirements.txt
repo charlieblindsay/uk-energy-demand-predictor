@@ -1,0 +1,10 @@
+openmeteo-requests
+pandas
+requests-cache
+retry-requests
+numpy
+datetime
+holidays
+scikit-learn
+pytest
+streamlit
