@@ -20,17 +20,20 @@ def main():
         ]
     )
 
-    date_six_months_ago = str(datetime.now() - timedelta(days=6 * 30)).split(' ')[0]
+    date_twelve_months_ago = str(datetime.now() - timedelta(days=12 * 30)).split(' ')[0]
+    last_year = date_twelve_months_ago.split('-')[0]
+
     yesterday_date = str(datetime.now() - timedelta(days=1)).split(' ')[0]
+    this_year = yesterday_date.split('-')[0]
 
     weather_df = weather_data_loader.get_historical_weather_data_df(
-        start_date=date_six_months_ago,
+        start_date=date_twelve_months_ago,
         end_date=yesterday_date
     )
 
     demand_data_loader = DemandDataLoader()
     demand_df = demand_data_loader.get_historical_demand_data_df(
-        years=[yesterday_date.split('-')[0]]
+        years=[last_year, this_year]
     )
 
     df = pd.merge(
