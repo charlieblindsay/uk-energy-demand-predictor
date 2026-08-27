@@ -1,0 +1,1 @@
+BUCKET_NAME = 'uk-energy-demand-predictions'

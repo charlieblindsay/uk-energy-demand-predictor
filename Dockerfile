@@ -3,25 +3,6 @@
 
 FROM python:3.10.7
 
-# EXPOSE 8501 is documentation, not a functional networking command
-# — worth being precise about what it actually does versus what people
-# assume it does.
-
-# It tells anyone reading the Dockerfile (and tools like docker inspect)
-# that the containerized app listens on port 8501 internally. It's
-# metadata baked into the image. That's it — it doesn't open the port,
-# forward traffic, or make anything reachable from outside the container
-# by itself.
-
-# Why 8501 specifically
-
-# That's just Streamlit's default port — when you run streamlit run
-# app.py, it binds to localhost:8501 unless told otherwise. So EXPOSE
-# 8501 in the Dockerfile matches what Streamlit is actually doing inside
-# the container.
-
-EXPOSE 8501
-
 WORKDIR app/
 
 # A venv's whole purpose is to isolate one 
@@ -35,11 +16,8 @@ WORKDIR app/
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY DemandDataLoader.py .
-COPY DataTransformer.py .
+COPY config.py .
 COPY main.py .
-COPY weather_config.py .
-COPY WeatherDataLoader.py .
 
 # FAQ: Difference between address and port.
 # Address (IP) — which network interface the server listens on. A machine can have multiple network interfaces (e.g. loopback, a LAN interface, a public interface), and the address tells the server which one(s) to accept connections through.
