@@ -14,8 +14,8 @@ def main():
     parquet_bytes = blob.download_as_bytes()
     df = pd.read_parquet(io.BytesIO(parquet_bytes))
 
-    min_date = df['datetime'].min().date()
-    max_date = df['datetime'].max().date()
+    min_date = df.index.min().date()
+    max_date = df.index.max().date()
 
     start_date = st.date_input(
         label='start_date',
