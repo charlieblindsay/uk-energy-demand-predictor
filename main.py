@@ -14,15 +14,18 @@ def main():
     parquet_bytes = blob.download_as_bytes()
     df = pd.read_parquet(io.BytesIO(parquet_bytes))
 
+    min_date = df['datetime'].min().date()
+    max_date = df['datetime'].max().date()
+
     start_date = st.date_input(
         label='start_date',
-        min_value=datetime.now(),
-        max_value=datetime.now() + timedelta(days=217)
+        min_value=min_date,
+        max_value=max_date
     )
     end_date = st.date_input(
         label='end_date',
-        min_value=datetime.now(),
-        max_value=datetime.now() + timedelta(days=217)
+        min_value=min_date,
+        max_value=max_date
     )
 
     df_filtered = df.loc[
