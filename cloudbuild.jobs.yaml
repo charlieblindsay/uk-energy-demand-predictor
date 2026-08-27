@@ -1,0 +1,11 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-f'
+      - 'Dockerfile.job'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-demand-data'
+      - '.'
+images:
+  - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-demand-data'
