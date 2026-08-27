@@ -65,8 +65,22 @@ def main():
 
     df_dict = {
         'datetime': [],
-        'predictions': []
+        'demand': []
     }
+
+    for i in range(df.shape[0]):
+        year = df.iloc[i]['year']
+        month = df.iloc[i]['month']
+        day = df.iloc[i]['day']
+        hour = df.iloc[i]['hour']
+        demand = df.iloc[i]['ND']
+
+        df_dict['datetime'].append(
+            datetime(year=year, month=month, day=day, hour=hour)
+        )
+        df_dict['demand'].append(
+            demand
+        )
 
     for i in range(df_future.shape[0]):
         year = df_future.iloc[i]['year']
@@ -78,14 +92,14 @@ def main():
         df_dict['datetime'].append(
             datetime(year=year, month=month, day=day, hour=hour)
         )
-        df_dict['predictions'].append(
+        df_dict['demand'].append(
             demand_prediction
         )
 
-    predictions_df = pd.DataFrame(df_dict).set_index("datetime")
+    historical_and_predicted_demand_df = pd.DataFrame(df_dict).set_index("datetime")
 
     buffer = io.BytesIO()
-    predictions_df.to_parquet(buffer)
+    historical_and_predicted_demand_df.to_parquet(buffer)
 
     client = storage.Client()
     bucket = client.bucket(BUCKET_NAME)

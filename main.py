@@ -25,9 +25,25 @@ def main():
         max_value=datetime.now() + timedelta(days=217)
     )
 
-    df_filtered = df.loc[start_date:end_date + timedelta(days=1)]
+    df_filtered = df.loc[
+        pd.Timestamp(start_date):
+        pd.Timestamp(end_date) + timedelta(days=1)
+    ].copy()
 
-    st.line_chart(df_filtered)
+    today = pd.Timestamp.today().normalize()
+
+    df_filtered['Actual'] = df_filtered.iloc[:, 0].where(
+        df_filtered.index <= today
+    )
+
+    df_filtered['Predicted'] = df_filtered.iloc[:, 0].where(
+        df_filtered.index > today
+    )
+
+    st.line_chart(
+        df_filtered[["Actual", "Predicted"]],
+        color=["#0000FF", "#00AA00"]
+    )
 
 
 if __name__ == '__main__':
