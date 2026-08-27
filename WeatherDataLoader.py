@@ -54,6 +54,11 @@ class WeatherDataLoader:
 		return responses
 
 	def _make_request_to_historical_weather_api(self, start_date, end_date):
+		"""
+		Args:
+			start_date (str): format: YYYY-MM-DD
+			end_date (str): format: YYYY-MM-DD
+		"""
 		url = "https://historical-forecast-api.open-meteo.com/v1/forecast"
 
 		params = {
@@ -107,6 +112,11 @@ class WeatherDataLoader:
 		return df
 
 	def get_historical_weather_data_df(self, start_date, end_date):
+		"""
+		Args:
+			start_date (str): format: YYYY-MM-DD
+			end_date (str): format: YYYY-MM-DD
+		"""
 		responses = self._make_request_to_historical_weather_api(
 			start_date=start_date,
 			end_date=end_date
