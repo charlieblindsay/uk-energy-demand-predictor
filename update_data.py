@@ -2,10 +2,11 @@ from weather_config import UK_WEATHER_LOCATIONS
 from WeatherDataLoader import WeatherDataLoader
 from DemandDataLoader import DemandDataLoader
 from DataLoader import DataLoader
-from sklearn.tree import DecisionTreeRegressor
+
 from DataTransformer import DataTransformer
 from DemandDataFrameBuilder import DemandDataFrameBuilder
 from CloudStorage import CloudStorage
+from DemandModel import DemandModel
 from config import RANDOM_STATE
 
 
@@ -41,11 +42,9 @@ def main():
         test_size=0.2
     )
 
-    decision_tree = DecisionTreeRegressor(random_state=RANDOM_STATE)
-
-    decision_tree.fit(X_train, y_train)
-
-    future_predicted_demand = decision_tree.predict(X_future)
+    model = DemandModel(random_state=RANDOM_STATE)
+    model.fit(X_train=X_train, y_train=y_train)
+    future_predicted_demand = model.predict(X_future)
 
     demand_dataframe_builder = DemandDataFrameBuilder()
 
