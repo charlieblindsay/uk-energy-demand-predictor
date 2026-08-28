@@ -4,9 +4,13 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY DemandDataLoader.py .
-COPY DataTransformer.py .
 COPY weather_config.py .
 COPY WeatherDataLoader.py .
+COPY DataLoader.py .
+COPY DataTransformer.py .
+COPY DemandDataFrameBuilder.py .
+COPY DemandModel.py .
+COPY CloudStorage.py .
 COPY update_data.py .
 COPY config.py .
 

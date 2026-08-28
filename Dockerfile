@@ -18,6 +18,9 @@ RUN pip install -r requirements.txt
 
 COPY config.py .
 COPY main.py .
+COPY JobExecutionViewer.py .
+COPY DemandDataViewer.py .
+COPY CloudStorage.py .
 
 # FAQ: Difference between address and port.
 # Address (IP) — which network interface the server listens on. A machine can have multiple network interfaces (e.g. loopback, a LAN interface, a public interface), and the address tells the server which one(s) to accept connections through.

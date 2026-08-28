@@ -1,0 +1,26 @@
+name: update-demand-data-deploy
+description: Update demand data on changes to the data pipeline
+
+serviceAccount: projects/uk-energy-demand-predictor/serviceAccounts/847998595638-compute@developer.gserviceaccount.com
+
+developerConnectEventConfig:
+  gitRepositoryLink: projects/uk-energy-demand-predictor/locations/europe-west1/connections/connection-bvi6iei/gitRepositoryLinks/charlieblindsay-uk-energy-demand-predictor
+  gitRepositoryLinkType: GITHUB
+  push:
+    branch: main
+
+includedFiles:
+  - Dockerfile.job
+  - update_data.py
+  - DemandDataLoader.py
+  - DataTransformer.py
+  - weather_config.py
+  - WeatherDataLoader.py
+  - DataLoader.py
+  - DemandDataFrameBuilder.py
+  - DemandModel.py
+  - CloudStorage.py
+  - config.py
+  - cloudbuild.job.yaml
+
+filename: cloudbuild.job.yaml
