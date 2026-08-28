@@ -1,0 +1,75 @@
+steps:
+  # -----------------------------
+  # Build service image
+  # -----------------------------
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build service'
+    args:
+      - 'build'
+      - '-f'
+      - 'Dockerfile'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-container:$COMMIT_SHA'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-container:latest'
+      - '.'
+
+  # Push service image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push service'
+    args:
+      - 'push'
+      - '--all-tags'
+      - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-container'
+
+  # Deploy service
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    id: 'Deploy service'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'services'
+      - 'update'
+      - 'update-container'
+      - '--image=europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-container:$COMMIT_SHA'
+      - '--region=europe-west1'
+      - '--quiet'
+
+  # -----------------------------
+  # Build job image
+  # -----------------------------
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build job'
+    args:
+      - 'build'
+      - '-f'
+      - 'Dockerfile.job'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-demand-data:$COMMIT_SHA'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-demand-data:latest'
+      - '.'
+
+  # Push job image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push job'
+    args:
+      - 'push'
+      - '--all-tags'
+      - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-demand-data'
+
+  # Update Cloud Run Job
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    id: 'Update job'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'jobs'
+      - 'update'
+      - 'update-demand-data'
+      - '--image=europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-demand-data:$COMMIT_SHA'
+      - '--region=europe-west1'
+
+images:
+  - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-container:$COMMIT_SHA'
+  - 'europe-west1-docker.pkg.dev/uk-energy-demand-predictor/cloud-run-source-deploy/update-demand-data:$COMMIT_SHA'
