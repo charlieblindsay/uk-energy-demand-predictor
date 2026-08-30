@@ -19,7 +19,7 @@ def main():
     latest_execution = job_execution_viewer.get_latest_execution()
 
     if latest_execution:
-        st.write("Last time data was refreshed and model was retrained on new data:", latest_execution.completion_time)
+        st.write("Last time data was refreshed and model was retrained on new data:", latest_execution)
 
     start_date = st.date_input(
         label='start_date',

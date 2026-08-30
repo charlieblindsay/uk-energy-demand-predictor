@@ -1,21 +1,26 @@
 from datetime import datetime, timedelta
 import pandas as pd
 from dateutil.relativedelta import relativedelta
+from WeatherDataLoader import WeatherDataLoader
+from DemandDataLoader import DemandDataLoader
 
 
 class DataLoader:
     def __init__(
         self,
-        weather_data_loader,
-        demand_data_loader,
-        num_months_historical_data
+        weather_data_locations,
+        weather_metrics,
+        num_months_data
     ):
-        self.weather_data_loader = weather_data_loader
-        self.demand_data_loader = demand_data_loader
-        self.num_months_historical_data = num_months_historical_data
+        self.weather_data_loader = WeatherDataLoader(
+            weather_locations_dict=weather_data_locations,
+            metrics=weather_metrics
+        )
+        self.demand_data_loader = DemandDataLoader()
+        self.num_months_data = num_months_data
 
     def get_historical_data_df(self):
-        start_datetime = (datetime.now() - relativedelta(months=self.num_months_historical_data))
+        start_datetime = (datetime.now() - relativedelta(months=self.num_months_data))
         start_date = start_datetime.strftime("%Y-%m-%d")
         start_year = start_datetime.strftime("%Y")
 

@@ -8,4 +8,5 @@ scikit-learn==1.7.2
 pytest==9.1.1
 streamlit==1.61.1
 urllib3==1.26.20
-google-cloud-storage
+google-cloud-storage==3.13.1
+google-cloud-run==0.16.1

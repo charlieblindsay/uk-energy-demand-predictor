@@ -7,7 +7,7 @@ COPY DemandDataLoader.py .
 COPY weather_config.py .
 COPY WeatherDataLoader.py .
 COPY DataLoader.py .
-COPY DataTransformer.py .
+COPY DataSplitter.py .
 COPY DemandDataFrameBuilder.py .
 COPY DemandModel.py .
 COPY CloudStorage.py .

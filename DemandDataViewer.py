@@ -27,9 +27,11 @@ class DemandDataViewer:
             pd.Timestamp(start_date): pd.Timestamp(end_date) + timedelta(days=1)
         ].copy()
 
-        today = pd.Timestamp.today().normalize()
-
-        df_filtered['Actual'] = df_filtered['demand'].where(df_filtered.index <= today)
-        df_filtered['Predicted'] = df_filtered['demand'].where(df_filtered.index > today)
+        df_filtered['Actual'] = df_filtered['demand'].where(
+            ~df_filtered['predicted']
+        )
+        df_filtered['Predicted'] = df_filtered['demand'].where(
+            df_filtered['predicted']
+        )
 
         return df_filtered[['Actual', 'Predicted']]

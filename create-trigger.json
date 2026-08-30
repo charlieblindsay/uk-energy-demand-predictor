@@ -15,7 +15,7 @@
     "Dockerfile.job",
     "update_data.py",
     "DemandDataLoader.py",
-    "DataTransformer.py",
+    "DataSplitter.py",
     "weather_config.py",
     "WeatherDataLoader.py",
     "DataLoader.py",
