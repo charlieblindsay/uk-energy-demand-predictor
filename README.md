@@ -1,7 +1,5 @@
 # uk-energy-demand-predictor
 
-# uk-energy-demand-predictor
-
 A pipeline that forecasts UK national electricity demand from weather data, and a [Streamlit](https://streamlit.io/) app for viewing actual vs. predicted demand. It runs on Google Cloud: a scheduled Cloud Run **job** retrains the model on fresh data, and a Cloud Run **service** serves the Streamlit dashboard.
 
 ## What it does
